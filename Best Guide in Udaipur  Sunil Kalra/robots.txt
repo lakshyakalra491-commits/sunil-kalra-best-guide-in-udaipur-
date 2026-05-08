@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 Disallow: /assets/audio/
-Sitemap: https://www.bestguideinudaipur.com/sitemap.xml
+Sitemap: https://sunil-kalra-best-guide-in-udaipur.vercel.app/sitemap.xml
