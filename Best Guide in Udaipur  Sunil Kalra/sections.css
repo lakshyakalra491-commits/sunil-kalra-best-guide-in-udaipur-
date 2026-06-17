@@ -284,7 +284,8 @@
 /* --- SECTION 2: Hero --- */
 .hero-section {
   position: relative;
-  height: 100svh;
+  min-height: 100svh;
+  padding: 120px 0 80px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -328,6 +329,7 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
+  padding-bottom: 60px; /* Space for scroll indicator */
 }
 
 .hero-label {
@@ -383,13 +385,14 @@
 }
 
 .hero-floating-stats {
-  position: absolute;
-  bottom: 12%;
-  left: 0;
+  position: relative;
+  margin-top: 40px;
   width: 100%;
   display: flex;
   justify-content: space-around;
   padding: 0 var(--space-md);
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .glass-card {
