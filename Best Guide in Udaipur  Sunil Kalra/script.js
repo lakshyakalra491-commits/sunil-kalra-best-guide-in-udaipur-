@@ -14,6 +14,7 @@ const SunilKalra = {
         this.scrollProgress.init();
         this.mobileMenu.init();
         this.bookingForm.init();
+        this.faq.init();
     },
 
 
@@ -68,14 +69,14 @@ const SunilKalra = {
             const canvas = document.getElementById('particle-canvas');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
-            
+
             let width, height, particles;
-            
+
             const initCanvas = () => {
                 width = canvas.width = window.innerWidth;
                 height = canvas.height = window.innerHeight;
                 particles = [];
-                for(let i=0; i<60; i++) {
+                for (let i = 0; i < 60; i++) {
                     particles.push({
                         x: Math.random() * width,
                         y: Math.random() * height,
@@ -86,29 +87,29 @@ const SunilKalra = {
                     });
                 }
             };
-            
+
             const draw = () => {
                 ctx.clearRect(0, 0, width, height);
                 ctx.fillStyle = '#D4AF37'; // Gold
-                
+
                 particles.forEach(p => {
                     ctx.globalAlpha = p.alpha;
                     ctx.beginPath();
                     ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
                     ctx.fill();
-                    
+
                     p.x += p.vx;
                     p.y += p.vy;
-                    
+
                     // Wrap around
                     if (p.y < -10) p.y = height + 10;
                     if (p.x < -10) p.x = width + 10;
                     if (p.x > width + 10) p.x = -10;
                 });
-                
+
                 requestAnimationFrame(draw);
             };
-            
+
             initCanvas();
             draw();
             window.addEventListener('resize', initCanvas);
@@ -141,17 +142,17 @@ const SunilKalra = {
     parallax: {
         init() {
             if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-            
+
             const layers = document.querySelectorAll('.parallax-layer');
             const heroBg = document.querySelector('.parallax-bg');
-            
+
             window.addEventListener('scroll', () => {
                 const scrolled = window.pageYOffset;
                 if (scrolled > window.innerHeight) return; // Only run when in hero
-                
+
                 requestAnimationFrame(() => {
-                    if(heroBg) heroBg.style.transform = `translateY(${scrolled * 0.3}px)`;
-                    
+                    if (heroBg) heroBg.style.transform = `translateY(${scrolled * 0.3}px)`;
+
                     layers.forEach(layer => {
                         const speed = layer.getAttribute('data-speed');
                         layer.style.transform = `translateY(${scrolled * speed}px)`;
@@ -172,28 +173,28 @@ const SunilKalra = {
                             const isDecimal = counter.getAttribute('data-decimal') === 'true';
                             const duration = 2000;
                             const start = performance.now();
-                            
+
                             const updateCounter = (currentTime) => {
                                 const elapsed = currentTime - start;
                                 const progress = Math.min(elapsed / duration, 1);
-                                
+
                                 // easeOutQuart
                                 const ease = 1 - Math.pow(1 - progress, 4);
                                 const currentVal = target * ease;
-                                
+
                                 if (isDecimal) {
                                     counter.innerText = currentVal.toFixed(1);
                                 } else {
                                     counter.innerText = Math.floor(currentVal);
                                 }
-                                
+
                                 if (progress < 1) {
                                     requestAnimationFrame(updateCounter);
                                 } else {
                                     counter.innerText = isDecimal ? target.toFixed(1) : target;
                                 }
                             };
-                            
+
                             requestAnimationFrame(updateCounter);
                         });
                         observer.unobserve(entry.target);
@@ -211,13 +212,13 @@ const SunilKalra = {
             const timelineNodes = document.querySelectorAll('.timeline-node');
             const progressLine = document.getElementById('timeline-progress');
             if (!timelineNodes.length || !progressLine) return;
-            
+
             const container = document.querySelector('.timeline-container');
-            
+
             window.addEventListener('scroll', () => {
                 const containerRect = container.getBoundingClientRect();
                 const windowHeight = window.innerHeight;
-                
+
                 // Calculate progress based on container visibility
                 if (containerRect.top < windowHeight / 2 && containerRect.bottom > windowHeight / 2) {
                     const scrollDist = (windowHeight / 2) - containerRect.top;
@@ -240,22 +241,22 @@ const SunilKalra = {
     magnetic: {
         init() {
             if (window.matchMedia('(pointer: coarse)').matches) return; // Skip on touch
-            
+
             const magnetics = document.querySelectorAll('.magnetic-btn');
-            
+
             magnetics.forEach(btn => {
                 btn.addEventListener('mousemove', (e) => {
                     const rect = btn.getBoundingClientRect();
                     const x = e.clientX - rect.left - rect.width / 2;
                     const y = e.clientY - rect.top - rect.height / 2;
-                    
+
                     // Max offset 12px X, 8px Y
                     const xOffset = (x / (rect.width / 2)) * 12;
                     const yOffset = (y / (rect.height / 2)) * 8;
-                    
+
                     btn.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
                 });
-                
+
                 btn.addEventListener('mouseleave', () => {
                     btn.style.transform = 'translate(0px, 0px)';
                 });
@@ -270,7 +271,7 @@ const SunilKalra = {
                 const totalScroll = document.documentElement.scrollTop;
                 const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
                 const scroll = `${totalScroll / windowHeight * 100}%`;
-                if(progressBar) progressBar.style.width = scroll;
+                if (progressBar) progressBar.style.width = scroll;
             }, { passive: true });
         }
     },
@@ -280,15 +281,15 @@ const SunilKalra = {
             const toggle = document.getElementById('mobile-toggle');
             const menu = document.getElementById('mobile-menu');
             const links = document.querySelectorAll('.mobile-link');
-            
+
             if (!toggle || !menu) return;
-            
+
             toggle.addEventListener('click', () => {
                 const isOpen = toggle.classList.toggle('active');
                 menu.classList.toggle('active');
                 document.body.style.overflow = isOpen ? 'hidden' : '';
             });
-            
+
             links.forEach(link => {
                 link.addEventListener('click', () => {
                     toggle.classList.remove('active');
@@ -342,6 +343,36 @@ const SunilKalra = {
                     btn.style.color = '';
                     btn.style.borderColor = '';
                 }, 3000);
+            });
+        }
+    },
+
+    faq: {
+        init() {
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const trigger = item.querySelector('.faq-trigger');
+                const content = item.querySelector('.faq-content');
+                if (!trigger || !content) return;
+
+                trigger.addEventListener('click', () => {
+                    const isOpen = item.classList.contains('active');
+
+                    // Close all other FAQ items (accordion behavior)
+                    faqItems.forEach(i => {
+                        i.classList.remove('active');
+                        const c = i.querySelector('.faq-content');
+                        if (c) c.style.maxHeight = null;
+                        const t = i.querySelector('.faq-trigger');
+                        if (t) t.setAttribute('aria-expanded', 'false');
+                    });
+
+                    if (!isOpen) {
+                        item.classList.add('active');
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                        trigger.setAttribute('aria-expanded', 'true');
+                    }
+                });
             });
         }
     }
