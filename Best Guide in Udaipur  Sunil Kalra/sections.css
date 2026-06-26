@@ -1286,6 +1286,11 @@
   transition: all 0.3s ease;
 }
 
+.form-input option {
+  background-color: #111;
+  color: var(--text-primary);
+}
+
 .form-input:focus {
   outline: none;
   border-bottom-color: var(--gold-pure);
